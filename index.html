@@ -34,20 +34,79 @@
             overflow: hidden;
         }
 
-        #header::before {
-            content: '';
+        /* Animated background elements */
+        .bg-shapes {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite;
+            overflow: hidden;
+            z-index: 0;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary-color);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            width: 300px;
+            height: 300px;
+            background: #ff00ff;
+            top: 50%;
+            right: -50px;
+            animation-delay: 5s;
+        }
+
+        .shape3 {
+            width: 200px;
+            height: 200px;
+            background: var(--primary-color);
+            bottom: 10%;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(30px, 50px) scale(1.05); }
+        }
+
+        /* Particles effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite ease-in-out;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
 
         .container {
@@ -64,12 +123,25 @@
             align-items: center;
             padding: 20px 0;
             flex-wrap: wrap;
-            background: rgba(15, 52, 96, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 52, 96, 0.8);
+            backdrop-filter: blur(20px);
             border-radius: 50px;
             padding: 15px 40px;
             margin-top: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .logo {
@@ -78,11 +150,13 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--primary-color);
-            transition: transform 0.3s ease;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
         }
 
         .logo:hover {
             transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.6);
         }
 
         nav ul {
@@ -97,45 +171,68 @@
             text-decoration: none;
             font-weight: 500;
             position: relative;
-            transition: color 0.3s ease;
-            padding: 5px 0;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        nav ul li a.active,
+        nav ul li a:hover {
+            color: var(--primary-color);
+            background: rgba(0, 217, 255, 0.1);
         }
 
         nav ul li a::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
             height: 2px;
             background: var(--primary-color);
             transition: width 0.3s ease;
         }
 
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 80%;
         }
 
         .header-text {
-            margin-top: 10%;
+            margin-top: 8%;
             animation: fadeInUp 1s ease;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            padding: 60px 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 217, 255, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            max-width: 700px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            padding: 60px 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            max-width: 750px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-text::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 217, 255, 0.05), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -143,20 +240,128 @@
             }
         }
 
+        .header-text > * {
+            position: relative;
+            z-index: 1;
+        }
+
         .header-text p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .header-text h1 {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             line-height: 1.2;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header-text span {
             color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .header-text span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+            animation: underlinePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes underlinePulse {
+            0%, 100% { width: 100%; opacity: 1; }
+            50% { width: 50%; opacity: 0.5; }
+        }
+
+        .header-text .description {
+            font-size: 1.1rem;
+            color: rgba(232, 232, 232, 0.9);
+            margin-top: 25px;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(71, 5, 5, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #137cb9);
+            color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
         }
 
         /* Mobile Menu Toggle */
@@ -165,6 +370,7 @@
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
+            z-index: 10;
         }
 
         .menu-toggle span {
@@ -172,86 +378,33 @@
             height: 3px;
             background: var(--text-light);
             transition: 0.3s;
+            border-radius: 3px;
         }
 
-        /* About Section */
-        #about {
-            background: #f5f5f5;
-            padding: 80px 0;
-            color: var(--text-dark);
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
         }
 
-        .row {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 50px;
-            align-items: start;
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
         }
 
-        .about-col-1 img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
         }
 
-        .about-col-1 img:hover {
-            transform: scale(1.05);
-        }
-
-        .sub-title {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--accent-color);
-            position: relative;
-            display: inline-block;
-        }
-
-        .sub-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50%;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .about-col-2 p {
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-
-        .tab-titles {
+        /* Stats Section */
+        .stats {
             display: flex;
-            gap: 30px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .tab-links {
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            background: #e0e0e0;
-        }
-
-        .tab-links:hover {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .tab-links.active-link {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .tab-contents {
-            display: none;
-            animation: fadeIn 0.5s ease;
+            gap: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            padding: 30px 50px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            animation: fadeIn 1.5s ease 0.5s backwards;
+            margin-top: 60px;
+            width: fit-content;
         }
 
         @keyframes fadeIn {
@@ -259,230 +412,29 @@
             to { opacity: 1; }
         }
 
-        .tab-contents.active-tab {
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
             display: block;
         }
 
-        .tab-contents ul {
-            list-style: none;
-        }
-
-        .tab-contents ul li {
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .tab-contents ul li:hover {
-            transform: translateX(10px);
-        }
-
-        .tab-contents ul li span {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        /* Services/Projects Section */
-        #services {
-            background: var(--secondary-color);
-            padding: 80px 0;
-        }
-
-        .services-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .services-list > div {
-            background: var(--accent-color);
-            padding: 40px;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .services-list > div:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.3);
-        }
-
-        .services-list h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .services-list p {
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-
-        .services-list a {
-            display: inline-block;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 25px;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .services-list a:hover {
-            background: var(--primary-color);
-            color: var(--secondary-color);
-        }
-
-        /* Contact Section */
-        #contact {
-            background: #f5f5f5;
-            padding: 80px 0;
-            color: var(--text-dark);
-        }
-
-        .contact-intro {
-            text-align: center;
-            font-size: 1.2rem;
-            margin-bottom: 60px;
-            color: #666;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            padding: 25px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: white;
-        }
-
-        .contact-details h3 {
-            margin: 0 0 8px 0;
-            color: var(--accent-color);
-            font-size: 1.1rem;
-        }
-
-        .contact-details a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            word-break: break-all;
-        }
-
-        .contact-details a:hover {
-            color: var(--primary-color);
-        }
-
-        .contact-form-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-form-container h2 {
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-
-        .form-description {
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .cta-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn-primary, .btn-secondary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent-color);
-            border-color: var(--accent-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--accent-color);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(15, 52, 96, 0.3);
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(232, 232, 232, 0.7);
+            margin-top: 5px;
         }
 
         /* Footer */
         footer {
             background: var(--secondary-color);
             color: var(--text-light);
-            padding: 30px 0;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
         }
 
         .footer-content {
@@ -495,12 +447,12 @@
 
         .footer-social {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
         .footer-social a {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: var(--accent-color);
             border-radius: 50%;
             display: flex;
@@ -508,11 +460,14 @@
             justify-content: center;
             color: var(--text-light);
             transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .footer-social a:hover {
             background: var(--primary-color);
-            transform: translateY(-3px);
+            transform: translateY(-5px) rotate(360deg);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
         }
 
         /* Responsive Design */
@@ -528,77 +483,99 @@
                 right: 20px;
                 width: calc(100% - 40px);
                 background: rgba(15, 52, 96, 0.95);
-                backdrop-filter: blur(10px);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 padding: 20px;
-                gap: 15px;
+                gap: 5px;
                 display: none;
                 border-radius: 20px;
-                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                border: 1px solid rgba(0, 217, 255, 0.2);
             }
 
             nav ul.active {
                 display: flex;
+                animation: slideDown 0.3s ease;
             }
 
             .header-text h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
-            .row {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .tab-titles {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .sub-title {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
             .header-text {
-                margin-top: 30%;
+                padding: 40px 30px;
+                margin-top: 15%;
             }
 
-            .header-text h1 {
-                font-size: 1.5rem;
+            .cta-buttons {
+                flex-direction: column;
             }
 
-            .header-text p {
-                font-size: 1rem;
+            .btn {
+                text-align: center;
+                justify-content: center;
             }
 
-            nav ul {
-                gap: 10px;
-            }
-
-            .services-list {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .contact-form-container {
-                padding: 30px 20px;
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 30px;
+                bottom: 30px;
             }
 
             .footer-content {
                 flex-direction: column;
                 text-align: center;
             }
+
+            .shape1, .shape2, .shape3 {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-text {
+                margin-top: 20%;
+                padding: 30px 20px;
+            }
+
+            .header-text h1 {
+                font-size: 2rem;
+            }
+
+            .header-text p {
+                font-size: 1rem;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .stats {
+                width: 90%;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="header">
+        <!-- Animated background -->
+        <div class="bg-shapes">
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
+            <div class="shape shape3"></div>
+        </div>
+        
+        <!-- Particles -->
+        <div class="particles" id="particles"></div>
+        
         <div class="container">
             <nav>
                 <img src="logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'">
@@ -608,206 +585,47 @@
                     <span></span>
                 </div>
                 <ul id="menu">
-                    <li><a href="#header">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
+            
             <div class="header-text">
                 <p>Computer Engineering Student</p>
                 <h1>Hi, I'm <span>Pranaya</span><br>Shrestha From Nepal</h1>
-            </div>
-        </div>
-    </div>
-
-    <div id="about">
-        <div class="container">
-            <div class="row">
-                <div class="about-col-1">
-                    <img src="pp.jpg" alt="Profile Picture" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%230f3460%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%2300d9ff%22 font-size=%2260%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EPS%3C/text%3E%3C/svg%3E'">
-                </div>
-                <div class="about-col-2">
-                    <h1 class="sub-title">About Me</h1>
-                    <p>
-                        I am a Computer Engineering student at Khwopa Engineering College with a strong interest in cybersecurity, particularly 
-                        in Blue Hat (defensive) security. I am a beginner in C/C++, Python, and HTML, and have explored CSS and Django by building
-                        small personal projects. I also have good skills in Linux, which supports my understanding of system internals, 
-                        security practices, and open-source tools. I'm currently focused on building a solid foundation in programming and cybersecurity to contribute to secure system development and defense.
-                    </p>
-                    <div class="tab-titles">
-                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                        <p class="tab-links" onclick="opentab('experience')">Experience</p>
-                        <p class="tab-links" onclick="opentab('education')">Education</p>
-                    </div>
-                    <div class="tab-contents active-tab" id="skills">
-                        <ul>
-                            <li><span>UI/UX Design</span><br>Beginner level with HTML, CSS, and JavaScript</li>
-                            <li><span>C/C++</span><br>Amateur level with practical project experience</li>
-                            <li><span>Python & Django</span><br>Building web applications and backends</li>
-                            <li><span>Linux</span><br>Strong understanding of system internals and security</li>
-                        </ul>
-                    </div>
-                    <div class="tab-contents" id="experience">
-                        <ul>
-                            <li><span>Web Development</span><br>Built an e-commerce website using HTML, CSS, JS, and Django</li>
-                            <li><span>C/C++ Projects</span><br>Developed a snake game and custom applications</li>
-                            <li><span>Cybersecurity</span><br>Exploring defensive security practices and tools</li>
-                        </ul>
-                    </div>
-                    <div class="tab-contents" id="education">
-                        <ul>
-                            <li><span>Bachelor in Computer Engineering</span><br>Khwopa Engineering College (2021 - Present)</li>
-                            <li><span>UI/UX Design</span><br>Self-study through online resources and practice</li>
-                            <li><span>C/C++ Programming</span><br>Self-study (2021 - 2022)</li>
-                        </ul>
-                    </div>
+                <p class="description">
+                    Passionate about cybersecurity and software development. Building secure systems and exploring the world of defensive security.
+                </p>
+                <div class="cta-buttons">
+                    <a href="projects.html" class="btn btn-primary">
+                        <span>View Projects</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary">
+                        <span>Get In Touch</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div id="services">
-        <div class="container">
-            <h1 class="sub-title">Projects</h1>
-            <div class="services-list">
-                <div>
-                    <h2>E-commerce Coffee Shop</h2>
-                    <p>Full-stack e-commerce website built with HTML, CSS, and JavaScript on the frontend, powered by Django backend with database integration and payment processing.</p>
-                    <a href="https://github.com/pranaya890/Ecommerce_coffee-shop" target="_blank">View Code →</a>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Projects</span>
                 </div>
-                <div>
-                    <h2>C/C++ Applications</h2>
-                    <p>Collection of C/C++ projects including a classic snake game with custom graphics and game mechanics, demonstrating object-oriented programming skills.</p>
-                    <a href="https://github.com/pranaya890/c-project" target="_blank">View Code →</a>
+                <div class="stat-item">
+                    <span class="stat-number">3+</span>
+                    <span class="stat-label">Years Learning</span>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="contact">
-        <div class="container">
-            <h1 class="sub-title">Get In Touch</h1>
-            <p class="contact-intro">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!</p>
-            
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email</h3>
-                            <a href="mailto:sthapranaya890@gmail.com">sthapranaya890@gmail.com</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                                <rect x="2" y="9" width="4" height="12"/>
-                                <circle cx="4" cy="4" r="2"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>LinkedIn</h3>
-                            <a href="https://www.linkedin.com/in/pranaya-shrestha-8296aa194?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">Connect with me</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>GitHub</h3>
-                            <a href="https://github.com/pranaya890" target="_blank">View my work</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Facebook</h3>
-                            <a href="https://www.facebook.com/share/1F4Kf4mt6q/" target="_blank">Add me on Facebook</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Instagram</h3>
-                            <a href="https://www.instagram.com/sthapranaya?igsh=MXYwaXEyNDZhdDNxdg==" target="_blank">Follow on Instagram</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
-                                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>X (Twitter)</h3>
-                            <a href="https://x.com/sthapranaya890?t=kSc0gIqow8ed_jofTYaZUg&s=09" target="_blank">Follow me on X</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="9" cy="12" r="1"/>
-                                <circle cx="15" cy="12" r="1"/>
-                                <path d="M7.5 7.5c3.5-1 6.5-1 10 0"/>
-                                <path d="M7 16.5c3.5 1 6.5 1 10 0"/>
-                                <path d="M15.5 17c0 1 1.5 3 2 3 1.5 0 2.833-1.667 3.5-3 .667-1.667 .5-5.833-1.5-11.5-1.457-1.015-3-1.34-4.5-1.5l-1 2.5"/>
-                                <path d="M8.5 17c0 1-1.356 3-1.832 3-1.429 0-2.698-1.667-3.333-3-.635-1.667-.476-5.833 1.428-11.5 1.388-1.015 2.782-1.34 4.237-1.5l1 2.5"/>
-                            </svg>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Discord</h3>
-                            <a href="https://discord.com/users/cininata" target="_blank">Connect on Discord</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact-form-container">
-                    <h2>Send a Message</h2>
-                    <p class="form-description">Or drop me a quick message here, and I'll get back to you soon!</p>
-                    <div class="cta-buttons">
-                        <a href="mailto:sthapranaya890@gmail.com" class="btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                            </svg>
-                            Email Me
-                        </a>
-                        <a href="https://www.linkedin.com/in/pranaya-shrestha-8296aa194?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="btn-secondary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                                <rect x="2" y="9" width="4" height="12"/>
-                                <circle cx="4" cy="4" r="2"/>
-                            </svg>
-                            LinkedIn
-                        </a>
-                    </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Dedication</span>
                 </div>
             </div>
         </div>
@@ -823,16 +641,39 @@
                             <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                         </svg>
                     </a>
-                    <a href="https://www.linkedin.com/in/pranaya-shrestha-8296aa194?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/pranaya-shrestha" target="_blank" aria-label="LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                             <rect x="2" y="9" width="4" height="12"/>
                             <circle cx="4" cy="4" r="2"/>
                         </svg>
                     </a>
-                    <a href="https://x.com/sthapranaya890?t=kSc0gIqow8ed_jofTYaZUg&s=09" target="_blank" aria-label="Twitter">
+                    <a href="https://facebook.com/pranaya.shrestha" target="_blank" aria-label="Facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/pranaya_shrestha" target="_blank" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </a>
+                    <a href="https://x.com/pranaya_shrestha" target="_blank" aria-label="X">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
+                        </svg>
+                    </a>
+                    <a href="https://discord.com/users/cininata" target="_blank" aria-label="Discord">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="12" r="1"/>
+                            <circle cx="15" cy="12" r="1"/>
+                            <path d="M7.5 7.5c3.5-1 6.5-1 10 0"/>
+                            <path d="M7 16.5c3.5 1 6.5 1 10 0"/>
+                            <path d="M15.5 17c0 1 1.5 3 2 3 1.5 0 2.833-1.667 3.5-3 .667-1.667 .5-5.833-1.5-11.5-1.457-1.015-3-1.34-4.5-1.5l-1 2.5"/>
+                            <path d="M8.5 17c0 1-1.356 3-1.832 3-1.429 0-2.698-1.667-3.333-3-.635-1.667-.476-5.833 1.428-11.5 1.388-1.015 2.782-1.34 4.237-1.5l1 2.5"/>
                         </svg>
                     </a>
                 </div>
@@ -841,41 +682,40 @@
     </footer>
 
     <script>
-        function opentab(tabname) {
-            var tablinks = document.getElementsByClassName("tab-links");
-            var tabcontents = document.getElementsByClassName("tab-contents");
-            
-            for (var tablink of tablinks) {
-                tablink.classList.remove("active-link");
-            }
-            for (var tabcontent of tabcontents) {
-                tabcontent.classList.remove("active-tab");
-            }
-            
-            event.currentTarget.classList.add("active-link");
-            document.getElementById(tabname).classList.add("active-tab");
-        }
-
         function toggleMenu() {
-            var menu = document.getElementById("menu");
+            const menu = document.getElementById("menu");
+            const toggle = document.querySelector(".menu-toggle");
             menu.classList.toggle("active");
+            toggle.classList.toggle("active");
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                var target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    document.getElementById("menu").classList.remove("active");
-                }
-            });
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('menu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+                menu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
         });
+
+        // Create animated particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        createParticles();
     </script>
 </body>
 </html>
