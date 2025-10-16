@@ -12,254 +12,408 @@
         }
 
         :root {
-            --primary-color: #00d9ff;
-            --secondary-color: #1a1a2e;
-            --accent-color: #0f3460;
-            --text-light: #e8e8e8;
-            --text-dark: #333;
+            --primary: #00d9ff;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --accent: #7b2cbf;
+            --text: #e0e0e0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
             line-height: 1.6;
-            color: var(--text-light);
-            background: var(--secondary-color);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* Animated gradient background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(123, 44, 191, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 90%, rgba(139, 0, 139, 0.1) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
         /* Navigation */
         nav {
-            background: rgba(15, 52, 96, 0.9);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.8s ease;
         }
 
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+        @keyframes slideDown {
+            from { opacity: 0; transform: translate(-50%, -30px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
         }
 
         .logo {
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            border: 2px solid var(--primary);
             object-fit: cover;
-            border: 2px solid var(--primary-color);
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg);
         }
 
         nav ul {
             display: flex;
             list-style: none;
             gap: 30px;
-            flex-wrap: wrap;
         }
 
-        nav ul li a {
-            color: var(--text-light);
+        nav a {
+            color: var(--text);
             text-decoration: none;
+            font-size: 14px;
             font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
             position: relative;
-            transition: color 0.3s ease;
-            padding: 5px 0;
         }
 
-        nav ul li a.active,
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after,
-        nav ul li a.active::after {
-            width: 100%;
+        nav a:hover, nav a.active {
+            color: var(--primary);
+            background: rgba(0, 217, 255, 0.1);
         }
 
         .menu-toggle {
             display: none;
             flex-direction: column;
-            cursor: pointer;
             gap: 5px;
+            cursor: pointer;
         }
 
         .menu-toggle span {
-            width: 30px;
-            height: 3px;
-            background: var(--text-light);
+            width: 25px;
+            height: 2px;
+            background: var(--text);
             transition: 0.3s;
         }
 
-        /* Projects Section */
-        #services {
-            padding: 80px 0;
-            animation: fadeIn 0.8s ease;
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 50px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .sub-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--text-light);
+        /* Header Section */
+        .page-header {
             text-align: center;
-            position: relative;
+            margin-bottom: 80px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-label {
             display: inline-block;
-            width: 100%;
-        }
-
-        .sub-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: var(--primary-color);
-        }
-
-        .services-intro {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 60px;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .services-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .services-list > div {
-            background: var(--accent-color);
-            padding: 40px;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .services-list > div:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-color);
-            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.3);
-        }
-
-        .services-list h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .services-list p {
+            padding: 8px 20px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--primary);
             margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: rgba(224, 224, 224, 0.7);
+            max-width: 700px;
+            margin: 0 auto;
             line-height: 1.8;
         }
 
-        .services-list a {
-            display: inline-block;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 25px;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            transition: all 0.3s ease;
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            animation: fadeInUp 1s ease 0.2s backwards;
         }
 
-        .services-list a:hover {
-            background: var(--primary-color);
-            color: var(--secondary-color);
+        /* Project Card */
+        .project-card {
+            background: rgba(10, 10, 15, 0.5);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+        }
+
+        .project-content {
+            padding: 40px;
+        }
+
+        .project-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .project-icon svg {
+            width: 35px;
+            height: 35px;
+            color: white;
+        }
+
+        .project-card h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .project-card p {
+            color: rgba(224, 224, 224, 0.7);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .project-link:hover::before {
+            left: 0;
+        }
+
+        .project-link:hover {
+            color: var(--dark);
+            transform: translateX(5px);
+        }
+
+        .project-link svg {
+            transition: transform 0.3s ease;
+        }
+
+        .project-link:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* Featured Project - Make first project full width */
+        .project-card:first-child {
+            grid-column: 1 / -1;
+        }
+
+        .project-card:first-child .project-content {
+            max-width: 800px;
+        }
+
+        .project-card:first-child .project-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .project-card:first-child .project-icon svg {
+            width: 40px;
+            height: 40px;
         }
 
         /* Footer */
         footer {
-            background: rgba(15, 52, 96, 0.9);
-            color: var(--text-light);
-            padding: 30px 0;
-            margin-top: 80px;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            margin-top: 100px;
         }
 
         .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
         }
 
-        .footer-social {
+        .social-links {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-color);
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-light);
+            color: var(--primary);
             transition: all 0.3s ease;
         }
 
-        .footer-social a:hover {
-            background: var(--primary-color);
-            transform: translateY(-3px);
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            nav {
+                width: 90%;
+                padding: 15px 20px;
+                gap: 20px;
+            }
+
             .menu-toggle {
                 display: flex;
             }
 
             nav ul {
-                position: absolute;
-                top: 70px;
-                left: 20px;
-                right: 20px;
-                width: calc(100% - 40px);
-                background: var(--accent-color);
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(10, 10, 15, 0.98);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
-                padding: 20px;
-                gap: 15px;
-                display: none;
-                border-radius: 10px;
+                padding: 100px 30px;
+                gap: 0;
+                border-left: 1px solid rgba(0, 217, 255, 0.2);
+                transition: right 0.4s ease;
             }
 
             nav ul.active {
-                display: flex;
+                right: 0;
             }
 
-            .services-list {
+            nav ul li {
+                width: 100%;
+                border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+                padding: 15px 0;
+            }
+
+            .projects-grid {
                 grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .project-card:first-child {
+                grid-column: 1;
             }
 
             .footer-content {
@@ -267,103 +421,206 @@
                 text-align: center;
             }
         }
+
+        @media (max-width: 480px) {
+            .project-content {
+                padding: 30px 25px;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="gradient-bg"></div>
+    <div class="grid-overlay"></div>
+
     <nav>
-        <div class="container">
-            <img src="logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'">
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul id="menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html" class="active">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+        <img src="logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'">
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+        <ul id="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
     </nav>
 
-    <div id="services">
-        <div class="container">
-            <h1 class="sub-title">My Projects</h1>
-            <p class="services-intro">Here are some of the projects I've worked on, showcasing my skills in web development and programming.</p>
-            <div class="services-list">
-                <div>
+    <div class="container">
+        <div class="page-header">
+            <div class="section-label">MY WORK</div>
+            <h1>Projects</h1>
+            <p class="page-description">
+                Here are some of the projects I've worked on, showcasing my skills in web development, 
+                programming, and problem-solving.
+            </p>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Project 1 - Featured -->
+            <div class="project-card">
+                <div class="project-content">
+                    <div class="project-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
                     <h2>E-commerce Coffee Shop</h2>
-                    <p>Full-stack e-commerce website built with HTML, CSS, and JavaScript on the frontend, powered by Django backend with database integration and payment processing. Features include product catalog, shopping cart, user authentication, and order management.</p>
-                    <a href="https://github.com/pranaya890/Ecommerce_coffee-shop" target="_blank">View Code →</a>
+                    <p>
+                        Full-stack e-commerce website built with HTML, CSS, and JavaScript on the frontend, 
+                        powered by Django backend with database integration and payment processing. Features 
+                        include product catalog, shopping cart, user authentication, and order management system.
+                    </p>
+                    <a href="https://github.com/pranaya890/Ecommerce_coffee-shop" target="_blank" class="project-link">
+                        <span>View Code</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
-                <div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-content">
+                    <div class="project-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"/>
+                            <polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                    </div>
                     <h2>C/C++ Applications</h2>
-                    <p>Collection of C/C++ projects including a classic snake game with custom graphics and game mechanics, demonstrating object-oriented programming skills. Features smooth gameplay, collision detection, and score tracking system.</p>
-                    <a href="https://github.com/pranaya890/c-project" target="_blank">View Code →</a>
+                    <p>
+                        Collection of C/C++ projects including a classic snake game with custom graphics and 
+                        game mechanics, demonstrating object-oriented programming skills. Features smooth 
+                        gameplay, collision detection, and score tracking system.
+                    </p>
+                    <a href="https://github.com/pranaya890/c-project" target="_blank" class="project-link">
+                        <span>View Code</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
-                <div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-content">
+                    <div class="project-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
                     <h2>Portfolio Website</h2>
-                    <p>Personal portfolio website showcasing my skills, projects, and contact information. Built with modern HTML5, CSS3, and JavaScript featuring responsive design, smooth animations, and interactive elements.</p>
-                    <a href="https://github.com/pranaya890" target="_blank">View Profile →</a>
+                    <p>
+                        Personal portfolio website showcasing my skills, projects, and contact information. 
+                        Built with modern HTML5, CSS3, and JavaScript featuring responsive design, smooth 
+                        animations, and interactive elements.
+                    </p>
+                    <a href="https://github.com/pranaya890" target="_blank" class="project-link">
+                        <span>View Profile</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2025 Pranaya Shrestha. All rights reserved.</p>
-                <div class="footer-social">
-                    <a href="https://github.com/pranaya890" target="_blank" aria-label="GitHub">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/pranaya-shrestha-8296aa194?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                            <rect x="2" y="9" width="4" height="12"/>
-                            <circle cx="4" cy="4" r="2"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.facebook.com/share/1F4Kf4mt6q/" target="_blank" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.instagram.com/sthapranaya?igsh=MXYwaXEyNDZhdDNxdg==" target="_blank" aria-label="Instagram">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                        </svg>
-                    </a>
-                    <a href="https://x.com/sthapranaya890?t=kSc0gIqow8ed_jofTYaZUg&s=09" target="_blank" aria-label="X">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
-                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
-                        </svg>
-                    </a>
-                    <a href="https://discord.com/users/cininata" target="_blank" aria-label="Discord">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="12" r="1"/>
-                            <circle cx="15" cy="12" r="1"/>
-                            <path d="M7.5 7.5c3.5-1 6.5-1 10 0"/>
-                            <path d="M7 16.5c3.5 1 6.5 1 10 0"/>
-                        </svg>
-                    </a>
-                </div>
+        <div class="footer-content">
+            <p>&copy; 2025 Pranaya Shrestha. All rights reserved.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/pranaya890" target="_blank" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/pranaya-shrestha-8296aa194" target="_blank" aria-label="LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/share/1F4Kf4mt6q/" target="_blank" aria-label="Facebook">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/sthapranaya" target="_blank" aria-label="Instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </a>
+                <a href="https://x.com/sthapranaya890" target="_blank" aria-label="X">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
+                        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
+                    </svg>
+                </a>
+                <a href="https://discord.com/users/cininata" target="_blank" aria-label="Discord">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="12" r="1"/>
+                        <circle cx="15" cy="12" r="1"/>
+                        <path d="M7.5 7.5c3.5-1 6.5-1 10 0"/>
+                        <path d="M7 16.5c3.5 1 6.5 1 10 0"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </footer>
 
     <script>
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.classList.toggle("active");
-        }
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menu.classList.toggle('active');
+            this.classList.toggle('active');
+            
+            if (this.classList.contains('active')) {
+                this.children[0].style.transform = 'rotate(45deg) translate(8px, 8px)';
+                this.children[1].style.opacity = '0';
+                this.children[2].style.transform = 'rotate(-45deg) translate(8px, -8px)';
+            } else {
+                this.children[0].style.transform = '';
+                this.children[1].style.opacity = '';
+                this.children[2].style.transform = '';
+            }
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                menu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                menuToggle.children[0].style.transform = '';
+                menuToggle.children[1].style.opacity = '';
+                menuToggle.children[2].style.transform = '';
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+                menu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                menuToggle.children[0].style.transform = '';
+                menuToggle.children[1].style.opacity = '';
+                menuToggle.children[2].style.transform = '';
+            }
+        });
     </script>
 </body>
 </html>
