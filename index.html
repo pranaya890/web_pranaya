@@ -200,8 +200,9 @@
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
-            z-index: 10000;
+            z-index: 10001;
             padding: 5px;
+            position: relative;
         }
 
         .menu-toggle span {
@@ -222,6 +223,25 @@
 
         .menu-toggle.active span:nth-child(3) {
             transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Mobile menu overlay */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
         }
 
         .header-text {
@@ -588,6 +608,9 @@
         </div>
         
         <div class="particles" id="particles"></div>
+        
+        <!-- Mobile menu overlay -->
+        <div class="menu-overlay" id="menuOverlay"></div>
         
         <div class="container">
             <nav>
