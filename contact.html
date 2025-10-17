@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>Contact - Pranaya Shrestha</title>
     <style>
         * {
@@ -86,18 +87,20 @@
         }
 
         nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
-            background: rgba(15, 52, 96, 0.8);
+            gap: 40px;
+            background: rgba(10, 10, 15, 0.7);
             backdrop-filter: blur(20px);
+            padding: 15px 40px;
             border-radius: 50px;
-            margin-top: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            z-index: 1000;
             animation: slideDown 0.8s ease;
-            position: relative;
         }
 
         @keyframes slideDown {
@@ -518,7 +521,7 @@
 
     <div class="container">
         <nav>
-            <img src="logo.jpg" alt="Logo" class="logo" onerror="this.style.display='none'">
+            <img src="apple-touch-icon.png" alt="Logo" class="logo" onerror="this.style.display='none'">
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -528,6 +531,8 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="projects.html">Projects</a></li>
+                <li><a href="certificate.html">Certifications</a></li>
+                <li><a href="blog.html">Blogs</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
         </nav>
