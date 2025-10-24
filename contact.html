@@ -453,9 +453,19 @@
                 <textarea id="message" name="message" placeholder="Write your message..." required></textarea>
             </div>
 
+            <!-- Honeypot field (hidden from humans) -->
+            <div style="display:none;">
+                <label>Leave this empty:</label>
+                <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+            </div>
+
+
             <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
         </form>
+
     </div>
+
+    
 
     <footer>
         <div class="footer-content">
